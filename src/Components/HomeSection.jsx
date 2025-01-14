@@ -110,56 +110,60 @@ const HomeSection = () => {
             backgroundImage: `url(${images[currentImageIndex].src})`,
           }}
         ></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80"></div>
-        <h1 className="absolute md:top-8 w-full text-center text-xl md:text-4xl font-bold text-white font-Mouse">
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-45"></div>
+        <h1 className="absolute  w-full text-center text-xl md:text-4xl font-bold text-white font-Mouse">
           HAVEN
         </h1>
 
         <nav className="absolute top-10 w-full bg-black bg-opacity-30 text-white px-4 md:px-8 flex items-center justify-center z-20">
-        <ul className="flex space-x-4 text-sm md:text-base font-medium">
-          <li>
-            <a href="#home" className="hover:underline">
-              HOME
-            </a>
-          </li>
-          <li>
-            <a href="#about" className="hover:underline">
-              ABOUT
-            </a>
-          </li>
-          <li>
-            <a href="#services" className="hover:underline">
-              SERVICES
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="hover:underline">
-              CONTACT
-            </a>
-          </li>
-        </ul>
-      </nav>
+          <ul className="flex space-x-4 text-sm md:text-base font-medium">
+            <li>
+              <a href="#home" className="hover:underline">
+                HOME
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="hover:underline">
+                ABOUT
+              </a>
+            </li>
+            <li>
+              <a href="#services" className="hover:underline">
+                SERVICES
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="hover:underline">
+                CONTACT
+              </a>
+            </li>
+          </ul>
+        </nav>
 
         <div className="relative z-10 flex flex-col justify-center items-start h-full text-white text-left px-4 md:px-20">
-        <div className="animate-slide-in-left">
-          <h1 className="text-3xl md:text-5xl font-bold font-Mate mb-4">
-            {images[currentImageIndex].title}
-          </h1>
-          <p className="text-base md:text-xl mb-6">
-            {images[currentImageIndex].description}
-          </p>
-          <button className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg shadow-lg text-white font-medium transition">
-            {images[currentImageIndex].buttonText}
-          </button>
-        </div>
+          <div className="animate-slide-in-left">
+            <h1 className="text-3xl md:text-5xl font-bold font-Mate mb-4">
+              {images[currentImageIndex].title}
+            </h1>
+            <p className="text-base md:text-xl mb-6">
+              {images[currentImageIndex].description}
+            </p>
+            <button className="px-6 py-3 bg-yellow-500 hover:bg-Yellow-600 rounded-lg shadow-lg text-white font-medium transition">
+              {images[currentImageIndex].buttonText}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="relative mt-10 flex flex-col items-center px-4">
+      <div className="relative mt-10 mb-10 flex flex-col items-center px-4">
+        <h2 className="text-3xl md:text-5xl font-bold font-Mate mb-4">
+          BOOK IN LESS THAN 2 MINUTES
+        </h2>
         {availableRooms > 0 ? (
           <>
-            <div className="flex flex-wrap items-center justify-center space-y-4 md:space-y-0 md:space-x-4 mb-4 flex-col md:flex-row">
-              <div className="flex flex-col items-center">
+            <div className="flex flex-wrap justify-center gap-4 mb-4">
+              {/* Check-In Date */}
+              <div className="flex flex-col items-center w-full sm:w-auto">
                 <h2 className="text-lg font-bold text-white mb-2">
                   Check-In Date
                 </h2>
@@ -167,10 +171,12 @@ const HomeSection = () => {
                   type="date"
                   value={checkInDate}
                   onChange={(e) => setCheckInDate(e.target.value)}
-                  className="px-4 py-2 border rounded-lg w-full"
+                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
                 />
               </div>
-              <div className="flex flex-col items-center">
+
+              {/* Check-In Time */}
+              <div className="flex flex-col items-center w-full sm:w-auto">
                 <h2 className="text-lg font-bold text-white mb-2">
                   Check-In Time
                 </h2>
@@ -178,15 +184,17 @@ const HomeSection = () => {
                   type="time"
                   value={checkInTime}
                   onChange={(e) => setCheckInTime(e.target.value)}
-                  className="px-4 py-2 border rounded-lg w-full"
+                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
                 />
               </div>
-              <div className="flex flex-col items-center">
+
+              {/* Unit Type */}
+              <div className="flex flex-col items-center w-full sm:w-auto">
                 <h2 className="text-lg font-bold text-white mb-2">Unit Type</h2>
                 <select
                   value={unitType}
                   onChange={(e) => setUnitType(e.target.value)}
-                  className="px-4 py-2 border rounded-lg w-full"
+                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
                 >
                   <option value="">Select Unit</option>
                   <option value="2-bedroom">2-Bedroom (KES 5,000/night)</option>
@@ -194,7 +202,9 @@ const HomeSection = () => {
                   <option value="bedsitter">Bedsitter (KES 2,000/night)</option>
                 </select>
               </div>
-              <div className="flex flex-col items-center">
+
+              {/* Number of Days */}
+              <div className="flex flex-col items-center w-full sm:w-auto">
                 <h2 className="text-lg font-bold text-white mb-2">
                   Number of Days
                 </h2>
@@ -203,10 +213,12 @@ const HomeSection = () => {
                   min="1"
                   value={numberOfDays}
                   onChange={(e) => setNumberOfDays(Number(e.target.value))}
-                  className="px-4 py-2 border rounded-lg w-full"
+                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
                 />
               </div>
-              <div className="flex flex-col items-center">
+
+              {/* Total Cost */}
+              <div className="flex flex-col items-center w-full sm:w-auto">
                 <h2 className="text-lg font-bold text-white mb-2">
                   Total Cost
                 </h2>
@@ -214,8 +226,10 @@ const HomeSection = () => {
                   KES {totalCost || 0}
                 </div>
               </div>
+
+              {/* Checkout Date */}
               {checkoutDate && (
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center w-full sm:w-auto">
                   <h2 className="text-lg font-bold text-white mb-2">
                     Checkout Date
                   </h2>
@@ -280,6 +294,66 @@ const HomeSection = () => {
           </div>
         </div>
       )}
+      <div className="bg-blue-500 text-white p-8 rounded-lg shadow-md">
+        <h2 className="text-3xl font-bold mb-4">What Our Guests Are Saying</h2>
+
+        <div className="flex items-start mb-6">
+          {/* User Avatar */}
+          <img
+            src="https://randomuser.me/api/portraits/men/1.jpg"
+            alt="User Avatar"
+            className="w-16 h-16 rounded-full mr-4"
+          />
+
+          {/* Review Content */}
+          <div>
+            <p className="font-semibold text-lg">John Doe</p>
+            <p className="text-gray-200">
+              "This was an incredible stay! The apartments were clean, modern,
+              and very comfortable. The location was perfect and made it easy to
+              explore Kisumu. Highly recommend!"
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-start mb-6">
+          {/* User Avatar */}
+          <img
+            src="https://randomuser.me/api/portraits/women/2.jpg"
+            alt="User Avatar"
+            className="w-16 h-16 rounded-full mr-4"
+          />
+
+          {/* Review Content */}
+          <div>
+            <p className="font-semibold text-lg">Jane Smith</p>
+            <p className="text-gray-200">
+              "The perfect getaway! The rooftop pergola had amazing views, and I
+              felt very secure with the 24/7 surveillance. Would definitely stay
+              again!"
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-start mb-6">
+          {/* User Avatar */}
+          <img
+            src="https://randomuser.me/api/portraits/men/3.jpg"
+            alt="User Avatar"
+            className="w-16 h-16 rounded-full mr-4"
+          />
+
+          {/* Review Content */}
+          <div>
+            <p className="font-semibold text-lg">Mark Robinson</p>
+            <p className="text-gray-200">
+              "An amazing experience overall! The staff were friendly, and the
+              amenities were top-notch. The apartment had everything I needed
+              for a comfortable stay."
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
