@@ -14,7 +14,7 @@ const BookingComponent = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/rooms`);
+        const response = await axios.get(`https://haven-backenf.onrender.com/rooms`);
         setAvailableRooms(response.data.rooms);
       } catch (err) {
         console.error(err);
@@ -40,7 +40,7 @@ const BookingComponent = () => {
     setError("");
 
     try {
-      const response = await axios.post(`http://127.0.0.1:5000/book-room`, {
+      const response = await axios.post(`https://haven-backenf.onrender.com/book-room`, {
         user_name: userName,
         user_email: userEmail,
         phone_number: phoneNumber,
