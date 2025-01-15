@@ -1,26 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Front1 from "../Images/Front1.jpeg";
 import LivingRoom from "../Images/LivingRoom.jpeg";
+import BookingComponent from "./Booking";
 
 const HomeSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [availableRooms, setAvailableRooms] = useState(5);
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkInTime, setCheckInTime] = useState("");
-  const [unitType, setUnitType] = useState("");
-  const [numberOfDays, setNumberOfDays] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [checkoutDate, setCheckoutDate] = useState(""); // New state for checkout date
-  const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const unitPrices = {
-    "2-bedroom": 5000,
-    "1-bedroom": 3500,
-    bedsitter: 2000,
-  };
-
   const images = [
     {
       src: Front1,
@@ -43,63 +27,6 @@ const HomeSection = () => {
 
     return () => clearInterval(interval);
   }, [images.length]);
-
-  useEffect(() => {
-    if (unitType && numberOfDays > 0) {
-      setTotalCost(unitPrices[unitType] * numberOfDays);
-    } else {
-      setTotalCost(0);
-    }
-
-    // Calculate the checkout date whenever check-in date or number of days changes
-    if (checkInDate && numberOfDays > 0) {
-      const checkIn = new Date(checkInDate);
-      checkIn.setDate(checkIn.getDate() + numberOfDays); // Add the number of days to check-in date
-      const checkout = checkIn.toISOString().split("T")[0]; // Format the checkout date (YYYY-MM-DD)
-      setCheckoutDate(checkout);
-    } else {
-      setCheckoutDate(""); // Reset if no check-in date or number of days
-    }
-  }, [unitType, numberOfDays, checkInDate]);
-
-  const handleBooking = () => {
-    if (!checkInDate || !checkInTime || !unitType || numberOfDays <= 0) {
-      setError("Please fill in all fields.");
-      return;
-    }
-    setError("");
-    setIsModalOpen(true);
-  };
-
-  const confirmBooking = () => {
-    if (!phoneNumber || phoneNumber.length < 10) {
-      setError("Please provide a valid phone number.");
-      return;
-    }
-    setError("");
-    alert(
-      `Booking confirmed! Details:
-      Check-in Date: ${checkInDate}
-      Check-in Time: ${checkInTime}
-      Expected Checkout Date: ${checkoutDate}
-      Unit Type: ${unitType}
-      Number of Days: ${numberOfDays}
-      Total Cost: KES ${totalCost}
-      Phone Number: ${phoneNumber}`
-    );
-    setAvailableRooms(availableRooms - 1);
-    setIsModalOpen(false);
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setCheckInDate("");
-    setCheckInTime("");
-    setUnitType("");
-    setNumberOfDays(0);
-    setPhoneNumber("");
-    setCheckoutDate(""); // Reset checkout date
-  };
 
   return (
     <div>
@@ -154,146 +81,9 @@ const HomeSection = () => {
           </div>
         </div>
       </div>
+      
+      <BookingComponent />
 
-      <div className="relative mt-10 mb-10 flex flex-col items-center px-4">
-        <h2 className="text-3xl md:text-5xl font-bold font-Mate mb-4">
-          BOOK IN LESS THAN 2 MINUTES
-        </h2>
-        {availableRooms > 0 ? (
-          <>
-            <div className="flex flex-wrap justify-center gap-4 mb-4">
-              {/* Check-In Date */}
-              <div className="flex flex-col items-center w-full sm:w-auto">
-                <h2 className="text-lg font-bold text-white mb-2">
-                  Check-In Date
-                </h2>
-                <input
-                  type="date"
-                  value={checkInDate}
-                  onChange={(e) => setCheckInDate(e.target.value)}
-                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
-                />
-              </div>
-
-              {/* Check-In Time */}
-              <div className="flex flex-col items-center w-full sm:w-auto">
-                <h2 className="text-lg font-bold text-white mb-2">
-                  Check-In Time
-                </h2>
-                <input
-                  type="time"
-                  value={checkInTime}
-                  onChange={(e) => setCheckInTime(e.target.value)}
-                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
-                />
-              </div>
-
-              {/* Unit Type */}
-              <div className="flex flex-col items-center w-full sm:w-auto">
-                <h2 className="text-lg font-bold text-white mb-2">Unit Type</h2>
-                <select
-                  value={unitType}
-                  onChange={(e) => setUnitType(e.target.value)}
-                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
-                >
-                  <option value="">Select Unit</option>
-                  <option value="2-bedroom">2-Bedroom (KES 5,000/night)</option>
-                  <option value="1-bedroom">1-Bedroom (KES 3,500/night)</option>
-                  <option value="bedsitter">Bedsitter (KES 2,000/night)</option>
-                </select>
-              </div>
-
-              {/* Number of Days */}
-              <div className="flex flex-col items-center w-full sm:w-auto">
-                <h2 className="text-lg font-bold text-white mb-2">
-                  Number of Days
-                </h2>
-                <input
-                  type="number"
-                  min="1"
-                  value={numberOfDays}
-                  onChange={(e) => setNumberOfDays(Number(e.target.value))}
-                  className="px-4 py-2 border rounded-lg w-full sm:w-auto"
-                />
-              </div>
-
-              {/* Total Cost */}
-              <div className="flex flex-col items-center w-full sm:w-auto">
-                <h2 className="text-lg font-bold text-white mb-2">
-                  Total Cost
-                </h2>
-                <div className="text-white font-medium">
-                  KES {totalCost || 0}
-                </div>
-              </div>
-
-              {/* Checkout Date */}
-              {checkoutDate && (
-                <div className="flex flex-col items-center w-full sm:w-auto">
-                  <h2 className="text-lg font-bold text-white mb-2">
-                    Checkout Date
-                  </h2>
-                  <div className="text-white font-medium">{checkoutDate}</div>
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={handleBooking}
-              className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg shadow-lg text-white font-medium transition"
-            >
-              Book Room (Rooms Available: {availableRooms})
-            </button>
-          </>
-        ) : (
-          <div className="w-full md:w-3/4 p-4 bg-red-500 text-white text-center rounded-lg shadow-lg">
-            Fully Booked
-          </div>
-        )}
-      </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[50%]">
-            <h2 className="text-xl font-bold mb-4">Confirm Booking</h2>
-            <p className="mb-2">Check-In Date: {checkInDate}</p>
-            <p className="mb-2">Check-In Time: {checkInTime}</p>
-            <p className="mb-2">Expected Checkout Date: {checkoutDate}</p>
-            <p className="mb-2">Unit Type: {unitType}</p>
-            <p className="mb-2">Number of Days: {numberOfDays}</p>
-            <p className="mb-4">Total Cost: KES {totalCost}</p>
-
-            <label className="block text-sm font-medium mb-2">
-              Phone Number:
-            </label>
-            <input
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="px-4 py-2 border rounded-lg w-full mb-4"
-              placeholder="Enter your phone number"
-            />
-
-            {error && <div className="text-red-500 mb-4">{error}</div>}
-
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmBooking}
-                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       <div className="bg-blue-500 text-white p-8 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold mb-4">What Our Guests Are Saying</h2>
 
