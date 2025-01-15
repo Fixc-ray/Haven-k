@@ -15,11 +15,14 @@ const BookingComponent = () => {
     const fetchRooms = async () => {
       try {
         const response = await axios.get(`https://haven-backenf.onrender.com/rooms`);
-        setAvailableRooms(response.data.rooms);
+        console.log(response.data); // Debug log to inspect the response
+        setAvailableRooms(response.data.rooms || response.data); // Adjust for response format
       } catch (err) {
         console.error(err);
       }
     };
+    
+    
     fetchRooms();
   }, []);
 
@@ -81,7 +84,7 @@ const BookingComponent = () => {
                 {room.room_type} - Room {room.room_number} (ksh{room.price_per_night}/night)
               </option>
             ))}
-          </select>
+          </select>                                                    
 
           <input
             type="date"
